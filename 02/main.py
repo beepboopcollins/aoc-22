@@ -3,14 +3,14 @@ from itertools import product
 with open("in.txt", "r") as f:
     raw_in = f.read()
 
-games = [tuple(line.split(" ")) for line in raw_in.split("\n")]
+games: list[tuple[str, str]] = [tuple(line.split(" ", 2)) for line in raw_in.split("\n")]
 
 their_moves = ["A", "B", "C"]
 your_moves = ["X", "Y", "Z"]
 
-possible_games = list(product(their_moves, your_moves))
+possible_games: list[tuple[str, str]] = list(product(their_moves, your_moves))
 
-game_points_map = {}
+game_points_map: dict[tuple[str, str], int] = {}
 
 for their_move, your_move in possible_games:
     your_move_index = your_moves.index(your_move)
@@ -33,7 +33,7 @@ out = sum(game_points_map[game] for game in games)
 with open("pt1.txt", "w") as f:
     f.write(str(out))
 
-game_points_map = {}
+game_points_map: dict[tuple[str, str], int] = {}
 
 for their_move, outcome in possible_games:
     their_move_index = their_moves.index(their_move)
