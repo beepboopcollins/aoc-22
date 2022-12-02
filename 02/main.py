@@ -21,8 +21,10 @@ for their_move, your_move in possible_games:
         outcome_points = 3
     elif your_move_index == (their_move_index + 1) % 3:
         outcome_points = 6
-    else:
+    elif your_move_index == (their_move_index + 2) % 3:
         outcome_points = 0
+    else:
+        raise ValueError("Invalid state")
 
     game_points_map[(their_move, your_move)] = outcome_points + move_points
 
@@ -38,12 +40,14 @@ for their_move, outcome in possible_games:
     if outcome == "Y":
         outcome_points = 3
         move_points = their_move_index + 1
-    if outcome == "X":
+    elif outcome == "X":
         outcome_points = 0
-        move_points = (their_move_index + 2)%3 + 1
-    if outcome == "Z":
+        move_points = (their_move_index + 2) % 3 + 1
+    elif outcome == "Z":
         outcome_points = 6
-        move_points = (their_move_index + 1)%3 + 1
+        move_points = (their_move_index + 1) % 3 + 1
+    else:
+        raise ValueError("Unknown outcome")
     game_points_map[(their_move, outcome)] = outcome_points + move_points
 
 out = sum(game_points_map[game] for game in games)
