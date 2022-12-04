@@ -3,8 +3,8 @@ from dataclasses import dataclass, field
 
 @dataclass
 class Elf:
-    start_zone_id: int
-    end_zone_id: int
+    start_zone: int
+    end_zone: int
 
 
 @dataclass
@@ -13,22 +13,23 @@ class ElfPair:
     elf2: Elf
 
     def one_contains_two(self) -> bool:
-        return (self.elf1.start_zone_id <= self.elf2.start_zone_id) and (self.elf1.end_zone_id >= self.elf2.end_zone_id)
+        return (self.elf1.start_zone <= self.elf2.start_zone) and (self.elf1.end_zone >= self.elf2.end_zone)
 
     def two_contains_one(self) -> bool:
-        return (self.elf2.start_zone_id <= self.elf1.start_zone_id) and (self.elf2.end_zone_id >= self.elf1.end_zone_id)
+        return (self.elf2.start_zone <= self.elf1.start_zone) and (self.elf2.end_zone >= self.elf1.end_zone)
 
     def one_contains_other(self) -> bool:
         return self.one_contains_two() or self.two_contains_one()
 
     def one_ends_in_two(self) -> bool:
-        return (self.elf2.start_zone_id <= self.elf1.end_zone_id <= self.elf2.end_zone_id)
+        return self.elf2.start_zone <= self.elf1.end_zone <= self.elf2.end_zone
 
-    def two_ends_in_one(self)-> bool:
-        return (self.elf1.start_zone_id <= self.elf2.end_zone_id <= self.elf1.end_zone_id)
+    def two_ends_in_one(self) -> bool:
+        return self.elf1.start_zone <= self.elf2.end_zone <= self.elf1.end_zone
 
     def has_overlap(self) -> bool:
         return self.one_ends_in_two() or self.two_ends_in_one()
+
 
 def read_file(filename: str) -> str:
     with open(filename, "r") as f:
