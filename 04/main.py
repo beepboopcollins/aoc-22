@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 
 @dataclass
@@ -55,11 +55,7 @@ def transform_raw_in(raw_in: list[str]) -> list[list[tuple[int, int]]]:
 
 
 def get_pairs(raw_pairs: list[list[tuple[int, int]]]) -> list[ElfPair]:
-    pairs = []
-    for raw_pair in raw_pairs:
-        elf1_raw, elf2_raw = raw_pair
-        pairs.append(ElfPair(Elf(*elf1_raw), Elf(*elf2_raw)))
-    return pairs
+    return [ElfPair(Elf(*raw_pair[0]), Elf(*raw_pair[1])) for raw_pair in raw_pairs]
 
 
 def main():
