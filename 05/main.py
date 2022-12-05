@@ -21,12 +21,10 @@ class Cargo:
     def apply_move(self, move: CargoMove):
         moving_items = [self.stacks[move.start - 1].pop() for _ in range(move.quantity)]
         self.stacks[move.end - 1].extend(moving_items)
-        return self
 
     def apply_move_9001(self, move: CargoMove):
         moving_items = [self.stacks[move.start - 1].pop() for _ in range(move.quantity)][::-1]
         self.stacks[move.end - 1].extend(moving_items)
-        return self
 
 
 def read_file(filename: str) -> str:
